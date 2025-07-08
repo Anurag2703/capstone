@@ -1,0 +1,31 @@
+fastapi
+uvicorn
+pydantic
+sqlalchemy
+psycopg2-binary          # if using PostgreSQL
+motor                    # if you prefer MongoDB async driver
+python-dotenv
+scikit-learn
+pandas
+numpy
+prophet
+torch                    # if you want to build LSTM from scratch
+transformers
+langchain
+langgraph
+openai                   # if using GPT
+tqdm
+joblib
+pytest
+faiss-cpu
+sentence-transformers
+openpyxl
+fastapi-utils
+
+
+# LLM Dependencies
+langchain
+langgraph
+openai   # or other provider for the LLM
+google-generativeai
+langchain-google-genai
