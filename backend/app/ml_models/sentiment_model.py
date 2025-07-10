@@ -20,7 +20,7 @@ sentiment_pipeline = pipeline("sentiment-analysis", model="distilbert-base-uncas
 
 def predict_sentiment(text: str):
     """
-    Predicts sentiment from text using a transformer
+        Predicts sentiment from text using a transformer
     """
     result = sentiment_pipeline(text)[0]
     return result["label"].lower()  # positive / negative

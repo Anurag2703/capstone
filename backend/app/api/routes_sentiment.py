@@ -10,8 +10,11 @@
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from app.ml_models.sentiment_model import predict_sentiment
+from transformers import pipeline
 
 router = APIRouter()
+
+classifier = pipeline("sentiment-analysis")
 
 
 
@@ -31,9 +34,10 @@ class SentimentResponse(BaseModel):
     score: float
 
 @router.post("/", response_model=SentimentResponse)
-async def analyze_sentiment(data: SentimentRequest):
+async def get_sentiment(data: SentimentRequest):
     try:
-        sentiment = predict_sentiment(data.text)
-        return SentimentResponse(sentiment=sentiment)
+        result = classifier(data.text)[0]
+        return SentimentResponse(sentiment=result["label"], score=result["score"])
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        print("SENTIMENT ERROR:", e)
+        raise

@@ -7,7 +7,7 @@ import pandas as pd
 class GitaLoader:
     def __init__(self, filepath: str):
         self.filepath = filepath
-        self.df = pd.read_excel("app/gita/Bhagwad_Gita.xlsx", engine='openpyxl')
+        self.df = pd.read_excel("Bhagwad_Gita_with_Sentiment.xlsx", engine='openpyxl')
         self._prepare_data()
 
     def _prepare_data(self):

@@ -17,7 +17,7 @@ from app.core.utils import get_db
 router = APIRouter()
 
 # adjust path to match your data location:
-GITA_FILE = "app/gita/Bhagwad_Gita.xlsx"
+GITA_FILE = "app/gita/Bhagwad_Gita_with_Sentiment.xlsx"
 recommender = GitaRecommender(GITA_FILE)
 
 
@@ -43,7 +43,7 @@ class GitaResponse(BaseModel):
 async def gita_verse(
     data: GitaRequest,
     db: Session = Depends(get_db)
-):
+):  # sourcery skip: raise-from-previous-error
     try:
         recommendation = recommender.recommend_by_sentiment(data.sentiment)
 

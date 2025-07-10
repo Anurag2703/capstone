@@ -39,11 +39,12 @@ llm = ChatGoogleGenerativeAI(
 # ---------------------------------------------------------------------
 class ChatState:
     def __init__(self, input: str = "", student_id: str = ""):
-        self.input = input
-        self.student_id = student_id
-        self.history = []
+        self.history = [input]
         self.gita_mode = False
         self.escalated = False
+        self.response = ""
+        self.student_id = student_id
+        self.emotion = None
 
 
 
@@ -54,15 +55,15 @@ class ChatState:
 # 4. Router
 # ---------------------------------------------------------------------
 def router(state: ChatState):
-    last_message = state.input
+    last_message = state.history[-1] if state.history else ""
     if "suicidal" in last_message.lower():
         state.escalated = True
-        return {"next": "escalate"}
+        return "escalate"
     if state.gita_mode:
-        return {"next": "gita"}
+        return "gita"
     if "help" in last_message.lower():
-        return {"next": "comfort"}
-    return {"next": "motivate"}
+        return "comfort"
+    return "motivate"
 
 
 
@@ -74,8 +75,9 @@ def router(state: ChatState):
 # ---------------------------------------------------------------------
 def motivate(state: ChatState):
     reply = llm.invoke("Please encourage the student with empathy")
+    state.response = reply.content
     state.history.append(reply.content)
-    return {"response": reply.content, "history": state.history}
+    return state
 
 
 
@@ -87,8 +89,9 @@ def motivate(state: ChatState):
 # ---------------------------------------------------------------------
 def comfort(state: ChatState):
     reply = llm.invoke("Provide some comforting advice to the student")
+    state.response = reply.content
     state.history.append(reply.content)
-    return {"response": reply.content, "history": state.history}
+    return state
 
 
 
@@ -100,8 +103,9 @@ def comfort(state: ChatState):
 # ---------------------------------------------------------------------
 def escalate(state: ChatState):
     reply = "Your distress is concerning. Please contact the student counselor immediately."
+    state.response = reply
     state.history.append(reply)
-    return {"response": reply, "history": state.history}
+    return state
 
 
 
@@ -111,14 +115,16 @@ def escalate(state: ChatState):
 # ---------------------------------------------------------------------
 # 8. Gita tool
 # ---------------------------------------------------------------------
-gita = GitaRecommender("app/gita/Bhagwad_Gita.xlsx")
+gita = GitaRecommender("app/gita/Bhagwad_Gita_with_Sentiment.xlsx")
 
 def gita_tool(state: ChatState):
     sentiment = "negative"
-    verse = gita.recommend_by_sentiment(sentiment)
-    reply = f"{verse['verse']} (Chapter {verse['chapter']})"
+    result = gita.recommend_by_sentiment(sentiment)
+    reply = f"{result['verse']} (Chapter {result['chapter']})"
+    state.response = reply
+    state.emotion = sentiment
     state.history.append(reply)
-    return {"response": reply, "history": state.history}
+    return state
 
 
 
@@ -139,14 +145,10 @@ graph.add_node("router", router)
 graph.add_edge("motivate", "router")
 graph.add_edge("comfort", "router")
 graph.add_edge("gita", "router")
-graph.add_conditional_edges(
-    "router", 
-    lambda state: state["next"], 
-    {"motivate": "motivate", "comfort": "comfort", "escalate": "escalate", "gita": "gita"}
-)
+graph.add_edge("router", END)
+graph.add_edge("escalate", END)
 
 graph.set_entry_point("motivate")
-graph.set_finish_point("escalate")  # optional if END not used
 compiled_chain = graph.compile()
 
 
@@ -158,15 +160,14 @@ compiled_chain = graph.compile()
 # 10. wrapper to plug into your FastAPI route
 # ---------------------------------------------------------------------
 def generate_response(message: str, student_id: str):
-    state = ChatState(input=message, student_id=student_id)
-    result = compiled_chain.invoke(state)
+    result = compiled_chain.invoke({"input": message, "student_id": student_id})
+    return {
+        "response": result.response,
+        "escalated": result.escalated,
+        "gita_mode": result.gita_mode,
+        "emotion": getattr(result, "emotion", None)
+    }
 
-    if isinstance(result, dict) and "response" in result:
-        return result["response"]
-    elif hasattr(result, 'response'):
-        return result.response
-    else:
-        return "Sorry, I could not understand."
 
 def get_chain():
     return compiled_chain

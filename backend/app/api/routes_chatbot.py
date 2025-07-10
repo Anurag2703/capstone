@@ -47,22 +47,20 @@ async def chatbot_interaction(
     db: Session = Depends(get_db)
 ):
     try:
-        reply = chatbot_agent.generate_response({
-            "input": data.message,
-            "student_id": data.student_id
-        })
+        result = chatbot_agent.generate_response(data.message, data.student_id)
 
-        # Save to DB
         record = models.ConversationLog(
             student_id=data.student_id,
             message=data.message,
-            reply=reply
+            reply=result["response"],
+            escalated=result["escalated"],
+            gita_mode=result["gita_mode"],
+            emotion=result["emotion"]
         )
         db.add(record)
         db.commit()
 
-        return ChatbotResponse(reply=reply)
+        return ChatbotResponse(reply=result["response"])
     except Exception as e:
-        # print("CHATBOT ROUTE EXCEPTION:", e)
-        logger.error(f"CHATBOT ROUTE EXCEPTION: {e}")
-        raise HTTPException(status_code=500, detail="Internal Server Error")
+        print("CHATBOT ROUTE EXCEPTION:", e)
+        raise HTTPException(status_code=500, detail=str(e))

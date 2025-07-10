@@ -52,11 +52,17 @@ class BurnoutRiskLog(Base):
 # -------------------------------------------------------------------------------
 class ConversationLog(Base):
     __tablename__ = "conversation_logs"
+
     id = Column(Integer, primary_key=True, index=True)
     student_id = Column(String, index=True)
-    message = Column(Text)
-    reply = Column(Text)
+    message = Column(String)
+    reply = Column(String)
     timestamp = Column(DateTime, default=datetime.utcnow)
+
+    # Optional enhancements:
+    escalated = Column(Boolean, default=False)
+    gita_mode = Column(Boolean, default=False)
+    emotion = Column(String, nullable=True)  # e.g., 'negative', 'neutral', etc.
 
 
 
