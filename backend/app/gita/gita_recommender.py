@@ -4,40 +4,69 @@
 
 
 
-from app.gita.gita_loader import GitaLoader
+import json
 import pandas as pd
-import random
 
 class GitaRecommender:
     def __init__(self, filepath: str):
-        self.df = pd.read_excel(filepath, engine='openpyxl')
+        self.df = pd.read_excel(filepath, engine="openpyxl")
+        self.df.columns = [col.strip().lower().replace(" ", "_") for col in self.df.columns]
 
-        # Normalize column names and sentiment values
-        self.df.columns = [col.strip().lower() for col in self.df.columns]
-        if 'sentiment' not in self.df.columns:
-            raise ValueError("Column 'sentiment' not found in Excel.")
-        self.df['sentiment'] = self.df['sentiment'].astype(str).str.strip().str.lower()
+        # Force chapter and verse to integer type
+        self.df["chapter"] = self.df["chapter"].astype(int)
+        self.df["verse"] = self.df["verse"].astype(int)
 
-        print("Gita verses loaded:", len(self.df))
-        print("Sentiment examples:", self.df['sentiment'].unique())
+        # Load sentiment map from JSON
+        with open("app/gita/sentiment_map.json", "r", encoding="utf-8") as f:
+            self.sentiment_map = json.load(f)
 
     def recommend_by_sentiment(self, sentiment: str):
         sentiment = sentiment.strip().lower()
-        print(f"🔍 Requested sentiment: '{sentiment}'")
 
-        filtered = self.df[self.df['sentiment'] == sentiment]
+        if sentiment not in self.sentiment_map:
+            return {"verse": "", "chapter": 0, "verse_number": 0}
 
-        if not filtered.empty:
-            chosen = filtered.sample(n=1).iloc[0]
-            return {
-                "chapter": int(chosen.get("chapter", 0)),
-                "verse_number": int(chosen.get("verse_number", 0)),
-                "verse": str(chosen.get("verse", "")).strip()
-            }
-        else:
-            print("No verses found for this sentiment.")
-            return {
-                "chapter": 0,
-                "verse_number": 0,
-                "verse": ""
-            }
+        # Ensure chapter and verse columns are integers for matching
+        self.df["chapter"] = self.df["chapter"].astype(int)
+        self.df["verse"] = self.df["verse"].astype(int)
+
+        print(f"Matching sentiment: '{sentiment}' → verses: {self.sentiment_map[sentiment]}")
+        print(f"Available columns: {self.df.columns.tolist()}")
+        print(self.df[['chapter', 'verse']].head())
+
+        
+        # Look for first matching verse in the dataframe
+        for chapter, verse in self.sentiment_map[sentiment]:
+            print(f"Trying to match Chapter={chapter}, Verse={verse}")
+            match = self.df[
+                (self.df["chapter"] == chapter) &
+                (self.df["verse"] == verse)
+            ]
+            if not match.empty:
+                row = match.iloc[0]
+                return {
+                    "verse": row.get("shloka") or row.get("engmeaning", ""),
+                    "chapter": chapter,
+                    "verse_number": verse,
+                    "sentiment": sentiment
+                }
+            else:
+                print(f"No match found for Chapter={chapter}, Verse={verse}")
+
+
+        return {"verse": "", "chapter": 0, "verse_number": 0}
+
+
+        # for chapter, verse in self.sentiment_map[sentiment]:
+        #     match = self.df[
+        #         (self.df["chapter"] == chapter) &
+        #         (self.df["verse"] == verse)
+        #     ]
+        #     if not match.empty:
+        #         row = match.iloc[0]
+        #         return {
+        #             "verse": row.get("shloka") or row.get("engmeaning", ""),
+        #             "chapter": chapter,
+        #             "verse_number": verse,
+        #             "sentiment": sentiment
+        #         }
