@@ -1,0 +1,37 @@
+/* ===== Global CSS Reset ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ===== Root Variables ===== */
+:root {
+    --primary-color: #4cafef;
+    --secondary-color: #333;
+    --background-color: #f8f9fa;
+    --text-color: #222;
+    --font-family: 'Inter', Arial, sans-serif;
+}
+
+html, body, #root {
+    width: 100%;
+    height: 100%;
+    font-family: var(--font-family);
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+button {
+    cursor: pointer;
+    font-family: inherit;
+}

@@ -1,0 +1,146 @@
+body, html, #root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100%;   /* ensure minimum height */
+  font-family: Arial, sans-serif;
+  color: #fff;
+  background: transparent;
+  overflow-x: hidden; /* only hide horizontal scroll */
+  /* ❌ do NOT use overflow: hidden here */
+}
+
+/* existing styles */
+.app-container {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  margin-top: 80px;
+  padding-bottom: 100px; /* add some space before footer */
+}
+
+.content-overlay h1 {
+  color: #ffffff;
+  font-family: 'Playfair Display', serif;
+  font-size: 3rem;
+  font-weight: 600;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+  margin: 20px 0;
+  text-decoration: underline;
+}
+
+.tagline {
+  color: #dddddd;
+  font-size: 1.2rem;
+  margin: 0 0 30px 0;
+  font-family: 'Roboto', sans-serif;
+  letter-spacing: 0.5px;
+}
+
+.hero-section {
+  margin-top: 20px;
+  color: #f0f0f0;
+  font-size: 1.1rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+}
+
+
+.hero-glass {
+  max-width: 800px;
+  margin: 0 auto; /* center horizontally */
+  padding: 30px 20px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.1); /* semi-transparent */
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* keep your existing hero-section styling inside glass */
+.hero-section {
+  margin-top: 10px;
+  color: #f0f0f0;
+  font-size: 1.1rem;
+  line-height: 1.8;
+}
+
+.hero-section p {
+  margin-bottom: 20px;
+}
+
+
+
+
+/* -------------------------------- */
+/* -------------FOOTER------------- */
+/* -------------------------------- */
+.footer {
+  width: 100%;
+  text-align: center;
+  padding: 20px 10px;
+  background: rgba(0, 0, 0, 0.6);
+  color: #ffffff;
+  font-family: 'Roboto', sans-serif;
+  font-size: 0.9rem;
+  letter-spacing: 0.5px;
+  margin-top: 135px;
+  position: relative; /* stay in normal flow */
+  z-index: 1;         /* above background canvas */
+}
+
+.footer a {
+  color: #00bfff;
+  text-decoration: none;
+  margin: 0 5px;
+  font-weight: 500;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+
+.footer-separator {
+  border: none;
+  border-top: 2px solid #ffffff; /* pure white */
+  opacity: 0.8; /* slightly transparent */
+  margin: 40px auto -130px auto;
+  width: 90%;           /* responsive width */
+  max-width: 1200px;
+  z-index: 2;           /* make sure it sits above canvas */
+  position: relative;   /* ensures z-index applies */
+}
+
+
+
+
+
+@media (max-width: 768px) {
+  .content-overlay h1 {
+    font-size: 2rem;
+  }
+
+  .hero-glass {
+    padding: 20px 15px;
+    margin: 0 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .content-overlay h1 {
+    font-size: 1.6rem;
+  }
+
+  .hero-glass {
+    padding: 15px 10px;
+    margin: 0 10px;
+  }
+
+  .hero-section {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+}
