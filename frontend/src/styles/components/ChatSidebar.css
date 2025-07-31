@@ -1,0 +1,90 @@
+.chat-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 250px;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    padding: 20px;
+    box-sizing: border-box;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
+    transition: width 0.3s ease; /* smooth transition */
+    overflow: hidden;
+    z-index: 2;
+}
+
+/* collapsed state */
+.chat-sidebar.collapsed {
+    width: 60px; /* shrinks smoothly */
+}
+
+/* Fade out chat list when collapsed */
+.chat-sidebar.collapsed .chat-list,
+.chat-sidebar.collapsed .sidebar-title {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+}
+
+/* When expanded */
+.chat-sidebar .chat-list,
+.chat-sidebar .sidebar-title {
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+.sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.sidebar-header h2 {
+    font-size: 1.2rem;
+    margin-top: 50px;
+    color: rgb(0, 217, 255);
+    text-decoration: underline;
+}
+
+
+.sidebar-title {
+    font-size: 1.2rem;
+    margin: 0;
+    white-space: nowrap;
+}
+
+.collapse-btn {
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 1.2rem;
+    cursor: pointer;
+    margin-top: 50px;
+}
+
+.chat-list {
+    overflow-y: auto;
+    max-height: calc(100% - 60px);
+}
+
+.chat-item {
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    margin-bottom: 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.chat-item:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.empty {
+    color: #aaa;
+    font-style: italic;
+}

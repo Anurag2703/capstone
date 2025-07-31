@@ -1,0 +1,57 @@
+{
+    "suicidal": [
+        "💬 I'm deeply sorry you're feeling this way. You're not alone. Please reach out to a professional or someone you trust.",
+        "💬 If you're in immediate danger, please contact emergency services. You're cared for and valued.",
+        "💬 You are irreplaceable. Your pain is valid, and help is available.",
+        "💬 Even in the darkest times, there is a light. Talk to someone. You matter.",
+        "💬 You are stronger than you realize. Don't face this alone — reach out."
+    ],
+    
+    "hopeless": [
+        "💬 Things may feel dark now, but nothing stays the same forever. Please hold on.",
+        "💬 You're not alone. With the right support, hope can return.",
+        "💬 Life has many chapters — this isn't the end of your story.",
+        "💬 Even a small step forward is progress. Don't give up.",
+        "💬 You're not broken — you're human. Hope can grow again."
+    ],
+    
+    "self_harm": [
+        "💬 Please don’t hurt yourself. Your life and your safety matter so much. Talk to someone.",
+        "💬 You are loved and needed. There is help. There is healing.",
+        "💬 You're in pain — but harming yourself isn't the answer. Let's find a healthier way.",
+        "💬 You're not alone in this battle. There are people who care.",
+        "💬 Please be kind to yourself. You're worthy of care and support."
+    ],
+    
+    "depression": [
+        "💬 Depression can feel unbearable — but it's also treatable. You're stronger than you feel.",
+        "💬 It's okay to not be okay. There is hope and there is help.",
+        "💬 You matter. Even if your mind says otherwise, your presence is important.",
+        "💬 You don’t have to face this alone. Reach out and speak your truth.",
+        "💬 Keep holding on — healing takes time, but it is possible."
+    ],
+    
+    "anxiety": [
+        "💬 Take a deep breath. This moment will pass. You're safe and capable.",
+        "💬 You are not your thoughts. You are more resilient than anxiety tells you.",
+        "💬 One breath at a time. You’ve handled hard things before.",
+        "💬 You’re doing your best — that is enough.",
+        "💬 Focus on what you can control. Let go of what you can’t."
+    ],
+    
+    "overwhelmed": [
+        "💬 It’s okay to pause. You don’t have to do it all right now.",
+        "💬 Break things down. Take it one step at a time.",
+        "💬 You are not failing — you’re doing your best in a tough moment.",
+        "💬 You are not alone in this feeling. Many have been here and moved through it.",
+        "💬 Be gentle with yourself. You are worthy of patience."
+    ],
+    
+    "positive": [
+        "🌟 That's wonderful to hear! Keep up the positive energy.",
+        "🌞 Your light shines bright today — stay inspired!",
+        "🌼 It’s beautiful to see you feeling good. Hold onto that joy.",
+        "🌈 Your strength and optimism are admirable. Keep going!",
+        "✨ Moments like these are a gift — celebrate them."
+    ]
+}

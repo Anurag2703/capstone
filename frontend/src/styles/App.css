@@ -37,6 +37,12 @@ body, html, #root {
   letter-spacing: 0.5px;
 }
 
+
+
+
+/* -------------------------------- */
+/* --------------HERO-------------- */
+/* -------------------------------- */
 .hero-section {
   margin-top: 20px;
   color: #f0f0f0;
@@ -70,6 +76,74 @@ body, html, #root {
 
 .hero-section p {
   margin-bottom: 20px;
+}
+
+.hero-button-container {
+  display: flex;
+  justify-content: center; /* horizontally center */
+  margin-top: 20px;
+}
+
+.hero-button-container button {
+  position: relative;
+  height: 60px;
+  width: 180px;
+  margin: 0 20px;
+  padding: 12px 28px;
+  border-radius: 50px;
+  border: none;
+  outline: none;
+  background: linear-gradient(270deg, #05c8f4, #fe6c98, #f9cf5b, #05c8f4);
+  background-size: 400%;
+  color: #000000;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  transition: background 0.5s, transform 0.2s ease;
+  overflow: hidden; /* ensure pseudo-element stays inside */
+}
+
+.hero-button-container button:hover {
+  color: #ffffff;
+  transform: scale(1.05);
+  animation: animate 7s linear infinite;
+  box-shadow:
+    0 0 10px #05c8f4,
+    0 0 20px #fe6c98,
+    0 0 30px #f9cf5b,
+    0 0 40px #05c8f4;
+}
+
+/* Glow effect */
+.hero-button-container button::before {
+  content: '';
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  bottom: -5px;
+  left: -5px;
+  border-radius: 50px;
+  background: inherit; /* same gradient */
+  filter: blur(20px);
+  opacity: 0;
+  transition: opacity 0.5s;
+  z-index: -1;
+}
+
+.hero-button-container button:hover::before {
+  opacity: 1;
+}
+
+/* Animation for gradient movement */
+@keyframes animate {
+  0% {
+    background-position: 0%;
+  }
+  100% {
+    background-position: 400%;
+  }
 }
 
 
@@ -127,6 +201,10 @@ body, html, #root {
     padding: 20px 15px;
     margin: 0 20px;
   }
+
+  .hero-button-container button {
+    width: 80%; /* responsive on smaller screens */
+  }
 }
 
 @media (max-width: 480px) {
@@ -142,5 +220,9 @@ body, html, #root {
   .hero-section {
     font-size: 1rem;
     line-height: 1.6;
+  }
+
+  .hero-button-container button {
+    width: 90%; /* even narrower devices */
   }
 }

@@ -1,0 +1,241 @@
+.chat-interface {
+    display: flex;
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    color: #fff;
+    overflow: hidden;
+}
+
+/* Sidebar */
+.chat-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 250px;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    padding: 20px;
+    box-sizing: border-box;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
+    transition: width 0.3s ease; /* smooth transition */
+    overflow: hidden;
+    z-index: 2;
+}
+
+.chat-sidebar.collapsed {
+    width: 60px; /* shrinks */
+}
+
+/* Sidebar Header */
+.sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.sidebar-title {
+    font-size: 1.2rem;
+    margin: 0;
+    white-space: nowrap;
+}
+
+.collapse-btn {
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+/* Sidebar list */
+.chat-list {
+    overflow-y: auto;
+    max-height: calc(100% - 60px);
+}
+
+.chat-item {
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    margin-bottom: 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.chat-item:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.empty {
+    color: #aaa;
+    font-style: italic;
+}
+
+/* Main chat area */
+.chat-main {
+    margin-top: 50px; /* adjust this based on your navbar height */
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    z-index: 1;
+    padding: 20px;
+    margin-left: 250px; /* normal sidebar width */
+    transition: margin-left 0.3s ease;
+}
+
+.chat-main.collapsed {
+    margin-left: 60px; /* when sidebar collapsed */
+}
+
+.chat-main.expanded {
+    margin-left: 60px; /* when sidebar is collapsed */
+}
+
+.chat-history {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 10px;
+    margin-bottom: 20px;
+}
+
+.chat-bubble {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    max-width: 60%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    white-space: pre-wrap;
+}
+
+.chat-input-container {
+    display: flex;
+    gap: 10px;
+}
+
+.chat-input-container input {
+    flex: 1;
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    font-size: 1rem;
+}
+
+.chat-input-container button {
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: none;
+    background: linear-gradient(270deg, #05c8f4, #fe6c98, #f9cf5b, #05c8f4);
+    background-size: 400%;
+    color: #000;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.5s, transform 0.2s ease;
+    position: relative; /* for the glow effect */
+    overflow: hidden;   /* ensure pseudo-element stays inside */
+}
+
+.chat-input-container button:hover {
+    transform: scale(1.05);
+    animation: animate 7s linear infinite; /* ✅ apply gradient animation */
+    color: #fff;
+    box-shadow:
+        0 0 10px #05c8f4,
+        0 0 20px #fe6c98,
+        0 0 30px #f9cf5b,
+        0 0 40px #05c8f4; /* ✅ glow matching gradient */
+}
+
+/* Glow effect */
+.chat-input-container button::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    bottom: -5px;
+    left: -5px;
+    border-radius: 8px;
+    background: inherit; /* same gradient as button */
+    filter: blur(20px);
+    opacity: 0;
+    transition: opacity 0.5s;
+    z-index: -1;
+}
+
+.chat-input-container button:hover::before {
+    opacity: 1;
+}
+
+/* ✅ Reuse your existing gradient animation */
+@keyframes animate {
+    0% {
+        background-position: 0%;
+    }
+    100% {
+        background-position: 400%;
+    }
+}
+
+
+
+.chat-bubble.user {
+    background: rgba(5, 200, 244, 0.3);
+    align-self: flex-end;
+}
+
+.chat-bubble.bot {
+    background: rgba(255, 255, 255, 0.1);
+    align-self: flex-start;
+}
+
+
+
+.chat-bubble-wrapper {
+    display: flex;
+    align-items: flex-end;
+    margin-bottom: 12px;
+    gap: 8px;
+}
+
+.chat-bubble-wrapper.left {
+    justify-content: flex-start;
+}
+
+.chat-bubble-wrapper.right {
+    justify-content: flex-end;
+}
+
+.chat-icon {
+    width: 32px;
+    height: 32px;
+    margin-bottom: 13px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* WhatsApp-style chat bubbles */
+.chat-bubble.user {
+    background: rgba(5, 200, 244, 0.2); /* glass effect */
+    backdrop-filter: blur(10px);
+    color: white;
+    border-radius: 16px 16px 4px 16px;
+    align-self: flex-end;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.chat-bubble.bot {
+    background: rgba(255, 255, 255, 0.1); /* glass effect */
+    backdrop-filter: blur(10px);
+    color: white;
+    border-radius: 16px 16px 16px 4px;
+    align-self: flex-start;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+

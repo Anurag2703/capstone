@@ -12,14 +12,30 @@
 # standard library imports
 from fastapi import FastAPI
 from app.api import routes_healthcheck, routes_burnout, routes_sentiment, routes_chatbot, routes_gita
+from fastapi.middleware.cors import CORSMiddleware
 
-# create tables
-from app.db import models
+# 👇 One-time schema creator
+from app.db.models import Base
 from app.core.config import engine
-models.Base.metadata.create_all(bind=engine)
+Base.metadata.create_all(bind=engine)
+
 
 app = FastAPI(title="Proactive Mental Wellness Assistant")
 
+
+# Allow your frontend origin (localhost:5173)
+# origins = [
+#     "http://localhost:5173",
+#     "http://127.0.0.1:5173"
+# ]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],  # adjust for production
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 # ------------------------------------------

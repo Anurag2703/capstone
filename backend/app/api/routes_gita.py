@@ -8,6 +8,8 @@
 # 1. Imports
 # ------------------------------------------
 from fastapi import APIRouter, HTTPException, Depends
+import random
+import pandas as pd
 from sqlalchemy.orm import Session
 from pydantic import BaseModel
 from app.gita.gita_recommender import GitaRecommender

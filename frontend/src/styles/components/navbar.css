@@ -1,6 +1,6 @@
 .navbar {
-    position: absolute;
-    top: 0;
+    position: fixed; /* make it fixed */
+    top: 0;          /* stick to the top */
     right: 0;
     padding: 20px;
     display: flex;
@@ -22,6 +22,7 @@
 .navbar a.logo {
     color: white;
     margin-right: 700px; /* keeps your original spacing on large screens */
+    margin-left: 40px;
     text-decoration: none;
     font-size: 24px;
 }
@@ -51,7 +52,8 @@
 }
 
 .navbar-link:hover {
-  text-decoration: none; /* removes underline */
+    color: #ffffff; /* light blue on hover */
+    text-decoration: none; /* removes underline */
 }
 
 

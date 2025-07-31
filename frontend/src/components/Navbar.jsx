@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import "../styles/components/Navbar.css";
 
 export default function Navbar() {
@@ -26,10 +27,9 @@ export default function Navbar() {
   return (
     <nav className="navbar" data-navbar>
       <div className="navbar-top">
-        <a href="#" className="logo">
-          Jujutsu Kaisen
-        </a>
-        {/* Hamburger */}
+        <Link to="/" className="logo">
+          MindVerse
+        </Link>
         <div
           className={`hamburger ${menuOpen ? "active" : ""}`}
           onClick={() => setMenuOpen(!menuOpen)}
@@ -42,24 +42,13 @@ export default function Navbar() {
 
       <ul className={`navbar-list ${menuOpen ? "show" : ""}`}>
         <li className="navbar-item">
-          <a href="#Sukuna" className="navbar-link" data-navbar-link>
-            Home
-          </a>
+          <Link to="/" className="navbar-link">Home</Link>
         </li>
         <li className="navbar-item">
-          <a href="/gojo.html" className="navbar-link" data-navbar-link>
-            About
-          </a>
+          <Link to="/about" className="navbar-link">About</Link>
         </li>
         <li className="navbar-item">
-          <a href="#Toji" className="navbar-link" data-navbar-link>
-            Therapy
-          </a>
-        </li>
-        <li className="navbar-item">
-          <a href="#Itadori" className="navbar-link" data-navbar-link>
-            Login
-          </a>
+          <Link to="/pricing" className="navbar-link">Pricing</Link>
         </li>
       </ul>
     </nav>

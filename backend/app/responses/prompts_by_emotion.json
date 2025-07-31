@@ -1,0 +1,49 @@
+{
+    "suicidal": [
+        "I don’t want to live anymore.",
+        "What’s the point of going on?",
+        "I’m tired of fighting every day.",
+        "I wish I could just disappear forever.",
+        "Nobody would even notice if I was gone."
+    ],
+    
+    "hopeless": [
+        "There’s no way out of this mess.",
+        "I feel like I’ve failed at everything.",
+        "Everything I try ends in disappointment.",
+        "I don’t see a future for myself anymore.",
+        "Hope is a joke. Nothing ever changes."
+    ],
+    
+    "self_harm": [
+        "Hurting myself is the only thing that helps.",
+        "I feel better when I see the pain on the outside.",
+        "Cutting is the only way I feel something.",
+        "I know it's bad, but I can’t stop.",
+        "The pain distracts me from my thoughts."
+    ],
+    
+    "depression": [
+        "I’m exhausted all the time, even after sleeping.",
+        "I fake a smile so no one asks questions.",
+        "Everything feels numb. Like I’m just existing.",
+        "I cry alone at night. Nobody knows.",
+        "I feel like I’m drowning in my own thoughts."
+    ],
+    
+    "anxiety": [
+        "My chest feels tight all the time.",
+        "I keep overthinking everything I say.",
+        "Even small things make me panic now.",
+        "I get nervous just talking to people.",
+        "I feel like I can’t breathe when things go wrong."
+    ],
+    
+    "positive": [
+        "I finally feel like I’m making progress.",
+        "Today was actually a good day.",
+        "I feel proud of myself for getting help.",
+        "I’m learning to trust myself again.",
+        "I’m starting to believe things can get better."
+    ]
+}
