@@ -11,6 +11,8 @@ from app.ml_models import chatbot_agent
 from app.ml_models.chatbot_agent import get_chain
 from app.db import models
 from app.core.utils import get_db
+from app.ml_models.sentiment_utils import detect_burnout_keywords, get_negative_sloka
+from app.ml_models.burnout_model import predict_burnout_risk  # ✅ imported locally
 import logging
 import random
 import pandas as pd
@@ -26,7 +28,7 @@ gita_df = pd.read_excel(GITA_FILE_PATH)
 
 def get_random_shloka():
     random_row = gita_df.sample(1).iloc[0]
-    return f"Chapter {random_row['Chapter']}, Verse {random_row['Verse']}:\n{random_row['Shloka']}"
+    return f"Chapter {random_row['Chapter']}, Verse {random_row['Verse']}: {random_row['Shloka']}"
 
 # ------------------------------------------
 # 2. Request
@@ -48,6 +50,21 @@ async def chatbot_interaction(
 ):
     try:
         print("Received request:", data.dict())  # ✅ Debugging
+
+        # 🔍 Detect burnout symptoms and call model directly if needed
+        burnout_info = None
+        if detect_burnout_keywords(data.message):
+            try:
+                # ⚠️ Replace these with actual derived metrics from student profile or heuristics
+                burnout_score, burnout_risk = predict_burnout_risk(
+                    login_freq=1,
+                    forum_activity=0,
+                    assignment_delay=7,
+                    missed_classes=4
+                )
+                burnout_info = burnout_risk
+            except Exception as e:
+                print("Burnout prediction failed:", e)
 
         try:
             # expects: { response, proverb, shloka, emotion, gita_mode, escalated }
@@ -74,17 +91,117 @@ async def chatbot_interaction(
         # Use fallback if shloka is None
         shloka = result.get("shloka") or get_random_shloka()
 
-        full_reply = (
-            f"{result['response']}\n\n"
-            f"💡 *Proverb*: {result.get('proverb', '—')}\n"
-            f"🕉️ *Gita Shloka*: {shloka}"
-        )
+        full_reply = f"{result['response']}"
+
+        # Only append if sloka is not already in response
+        if shloka not in result['response']:
+            full_reply += f"\n\n🕉️ *Gita Shloka*: {shloka}"
+
+        full_reply += f"\n💡 {result.get('proverb', '—')}"
+
+        # Append burnout info if applicable
+        if burnout_info:
+            full_reply += f"\n\n⚠️ Burnout Level: **{burnout_info}**. Please take care of yourself."
 
         return ChatbotResponse(reply=full_reply)
 
     except Exception as e:
         logger.exception("CHATBOT ROUTE EXCEPTION")
         raise HTTPException(status_code=500, detail="Something went wrong in the chatbot interaction.")
+
+
+
+
+
+
+
+# # Purpose:
+# #   LLM / LangGraph conversation routes
+
+# # ------------------------------------------
+# # 1. Imports
+# # ------------------------------------------
+# from fastapi import APIRouter, HTTPException, Depends
+# from sqlalchemy.orm import Session
+# from pydantic import BaseModel
+# from app.ml_models import chatbot_agent
+# from app.ml_models.chatbot_agent import get_chain
+# from app.db import models
+# from app.core.utils import get_db
+# import logging
+# import random
+# import pandas as pd
+
+# logger = logging.getLogger(__name__)
+# router = APIRouter()
+
+# chain = get_chain()
+
+# # Load Gita data for fallback use
+# GITA_FILE_PATH = "app/gita/Bhagwad_Gita_with_Sentiment.xlsx"
+# gita_df = pd.read_excel(GITA_FILE_PATH)
+
+# def get_random_shloka():
+#     random_row = gita_df.sample(1).iloc[0]
+#     return f"Chapter {random_row['Chapter']}, Verse {random_row['Verse']}:\n{random_row['Shloka']}"
+
+# # ------------------------------------------
+# # 2. Request
+# # ------------------------------------------
+# class ChatbotRequest(BaseModel):
+#     student_id: str
+#     message: str
+
+# # ------------------------------------------
+# # 3. Response
+# # ------------------------------------------
+# class ChatbotResponse(BaseModel):
+#     reply: str
+
+# @router.post("/", response_model=ChatbotResponse)
+# async def chatbot_interaction(
+#     data: ChatbotRequest,
+#     db: Session = Depends(get_db)
+# ):
+#     try:
+#         print("Received request:", data.dict())  # ✅ Debugging
+
+#         try:
+#             # expects: { response, proverb, shloka, emotion, gita_mode, escalated }
+#             result = chatbot_agent.generate_response(data.message, data.student_id)
+#             print("Generated result:", result)  # ✅ Debugging
+#         except Exception as e:
+#             logger.exception("Chatbot failed to generate response")
+#             fallback = "⚠️ Sorry, I'm having trouble responding right now. Please try again in a while.\n\n🕉️ Be calm and seek help. You are not alone."
+#             return ChatbotResponse(reply=fallback)
+
+#         # Log to DB
+#         record = models.ConversationLog(
+#             student_id=data.student_id,
+#             message=data.message,
+#             reply=result["response"],
+#             escalated=result.get("escalated", False),
+#             gita_mode=result.get("gita_mode", False),
+#             emotion=result.get("emotion", "unknown")
+#         )
+#         db.add(record)
+#         db.commit()
+#         print("DB commit successful")  # ✅ Debugging
+
+#         # Use fallback if shloka is None
+#         shloka = result.get("shloka") or get_random_shloka()
+
+#         full_reply = (
+#             f"{result['response']}\n\n"
+#             f"💡 *Proverb*: {result.get('proverb', '—')}\n"
+#             f"🕉️ *Gita Shloka*: {shloka}"
+#         )
+
+#         return ChatbotResponse(reply=full_reply)
+
+#     except Exception as e:
+#         logger.exception("CHATBOT ROUTE EXCEPTION")
+#         raise HTTPException(status_code=500, detail="Something went wrong in the chatbot interaction.")
 
 
 

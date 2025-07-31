@@ -7,6 +7,7 @@ import PricingPage from './components/PricingPage';
 import AboutPage from './components/AboutPage'; // ✅ import your new About page
 import ChatInterface from "./components/ChatInterface";
 import './styles/App.css';
+import './styles/components/PricingPage.css';
 
 function HomeContent({ setShowLoginModal }) {
   return (
@@ -25,16 +26,13 @@ function HomeContent({ setShowLoginModal }) {
           <div className="hero-glass">
             <div className="hero-section">
               <p>
-                Explore verses from the Bhagavad Gita, tailored to your current emotions.
-                Whether you’re feeling overwhelmed, seeking clarity, or practicing forgiveness—let wisdom guide you.
+                MindVerse is your AI-powered companion for emotional balance, reflection, and growth. Inspired by the timeless wisdom of the Bhagavad Gita, we blend ancient knowledge with cutting-edge AI to provide personalized guidance whenever you need it.
               </p>
               <p>
-                Our assistant helps you pause, reflect, and find inner calm through timeless teachings.
-                It’s more than advice—it’s a journey toward balance and self-discovery.
+                Our mission is to help individuals pause, reflect, and find clarity in the fast-paced modern world. Whether you're feeling overwhelmed, seeking direction, or simply exploring your inner self, MindVerse is here to guide you.
               </p>
               <p>
-                Designed for anyone seeking peace in a busy world, this tool blends ancient wisdom
-                with modern AI to give you personalized guidance whenever you need it.
+                Still growing & learning the ropes, we aim to make your journey to mental wellness engaging, calming, and meaningful.
               </p>
             </div>
 
@@ -42,6 +40,47 @@ function HomeContent({ setShowLoginModal }) {
               <button onClick={() => setShowLoginModal(true)}>Try Us</button>
             </div>
           </div>
+        </div>
+
+
+        {/* FEATURES SECTION */}
+        <div className="pricing-content">
+            <h1 className="pricing-title" style={{ marginBottom: '30px' }}>Features</h1>
+            {/* <p className="pricing-subtitle">
+            Choose a plan that fits your needs and level up your journey.
+            </p> */}
+
+            <div className="pricing-cards">
+              {/* Free Plan */}
+              <div className="pricing-card glass-card">
+                  <img src="/explore.gif" alt="explore" className="pricing-image" />
+                  <h2>Explore</h2>
+                  <p className="price">Explore verses from the Bhagavad Gita, tailored to your current emotions. Whether you’re feeling overwhelmed, seeking clarity, or practicing forgiveness—let wisdom guide you.</p>
+                  {/* <button className="pricing-btn">Your Plan</button> */}
+              </div>
+
+              {/* Plus Plan */}
+              <div className="pricing-card glass-card highlight">
+                <img src="/assistant.png" alt="assistant" className="pricing-image" />
+                  <h2>Assistant</h2>
+                  <p className="price">Our assistant helps you pause, reflect, and find inner calm through timeless teachings. It’s more than advice—it’s a journey toward balance and self-discovery.</p>
+                  {/* <ul>
+                  <li>✅ Everything in Free</li>
+                  <li>✅ Extended usage limits</li>
+                  <li>✅ Priority access</li>
+                  <li>✅ Access to advanced features</li>
+                  </ul> */}
+                  {/* <button className="pricing-btn active">Get Plus</button> */}
+              </div>
+
+              {/* Pro Plan */}
+              <div className="pricing-card glass-card">
+                <img src="/chatbot.png" alt="assistant" className="pricing-image" />
+                  <h2>Pro</h2>
+                  <p className="price">Designed for anyone seeking peace in a busy world, this tool blends ancient wisdom with modern AI to give you personalized guidance whenever you need it.</p>
+                  {/* <button className="pricing-btn">Get Pro</button> */}
+              </div>
+            </div>
         </div>
 
 

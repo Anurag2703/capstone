@@ -10,19 +10,13 @@ export default function AboutPage() {
         <div className="about-overlay">
             <h1>About Us</h1>
             <p>
-            <strong>MindVerse</strong> is your AI-powered companion for emotional balance,
-            reflection, and growth. Inspired by the timeless wisdom of the Bhagavad Gita,
-            we blend ancient knowledge with cutting-edge AI to provide personalized guidance
-            whenever you need it.
+                <strong>MindVerse</strong> is a thoughtful fusion of ancient wisdom and modern AI, crafted to support emotional well-being and inner reflection. Inspired by the enduring truths of the Bhagavad Gita, we aim to help you reconnect with yourself—one meaningful interaction at a time.
             </p>
             <p>
-            Our mission is to help individuals pause, reflect, and find clarity in the
-            fast-paced modern world. Whether you're feeling overwhelmed, seeking
-            direction, or simply exploring your inner self, MindVerse is here to guide you.
+                We believe that amidst the noise of modern life, everyone deserves a quiet space for clarity. Whether you're navigating stress, burnout, anxiety, or just in need of perspective, MindVerse offers gentle guidance drawn from timeless verses and personalized support through advanced AI.
             </p>
             <p>
-            Built with ❤️ using React and Three.js, we aim to make your journey to mental
-            wellness engaging, calming, and meaningful.
+                Our platform is more than just a tool—it's a companion for mindful living. With each response, we invite you to reflect, heal, and grow—at your own pace.
             </p>
         </div>
         </div>

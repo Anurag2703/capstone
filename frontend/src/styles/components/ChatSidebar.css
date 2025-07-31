@@ -88,3 +88,62 @@
     color: #aaa;
     font-style: italic;
 }
+
+
+/* ---------------------------------------- */
+/* + New Chat (button) */
+/* ---------------------------------------- */
+.chat-input-glow-button {
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: none;
+    background: linear-gradient(270deg, #05c8f4, #fe6c98, #f9cf5b, #05c8f4);
+    background-size: 400%;
+    color: #000;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.5s, transform 0.2s ease;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.chat-input-glow-button:hover {
+    transform: scale(1.05);
+    animation: animate 7s linear infinite;
+    color: #fff;
+    box-shadow:
+        0 0 10px #05c8f4,
+        0 0 20px #fe6c98,
+        0 0 30px #f9cf5b,
+        0 0 40px #05c8f4;
+}
+
+.chat-input-glow-button::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    bottom: -5px;
+    left: -5px;
+    border-radius: 8px;
+    background: inherit;
+    filter: blur(20px);
+    opacity: 0;
+    transition: opacity 0.5s;
+    z-index: -1;
+}
+
+.chat-input-glow-button:hover::before {
+    opacity: 1;
+}
+
+@keyframes animate {
+    0% {
+        background-position: 0%;
+    }
+    100% {
+        background-position: 400%;
+    }
+}

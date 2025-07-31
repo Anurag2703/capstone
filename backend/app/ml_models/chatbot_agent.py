@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langgraph.graph import StateGraph, END
 from app.gita.gita_recommender import GitaRecommender
-from .sentiment_utils import is_distress_message, get_theme_response
+from .sentiment_utils import is_distress_message, get_theme_response, detect_burnout_keywords
 
 load_dotenv()
 
@@ -206,12 +206,26 @@ compiled_chain = graph.compile()
 # ------------------------------------------
 def generate_response(message: str, student_id: str):
     is_distress, theme = is_distress_message(message)
+    burnout_info = None
+
+    # Check if the message contains burnout indicators
+    if detect_burnout_keywords(message):
+        try:
+            from app.ml_models.burnout_model import predict_burnout_risk
+            # ⚠️ These are placeholder values; you can later personalize them
+            score, burnout_info = predict_burnout_risk(1, 0, 7, 4)
+        except Exception as e:
+            print("⚠️ Burnout model failed:", e)
 
     if is_distress:
         theme = theme or "negative"
         response = get_theme_response(theme) + "\n\n"
         sloka = get_random_gita_sloka_by_sentiment(theme)
         response += sloka
+
+        if burnout_info:
+            response += f"\n\n⚠️ *Burnout Level: {burnout_info}* — please take care of yourself."
+
         return {
             "response": response,
             "escalated": True,
@@ -235,6 +249,7 @@ def generate_response(message: str, student_id: str):
         "proverb": state.proverb,
         "shloka": state.shloka or "You have the right to perform your prescribed duties..."
     }
+
 
 def get_chain():
     return compiled_chain

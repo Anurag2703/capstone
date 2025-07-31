@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import '../styles/components/ChatSidebar.css';
+import pencilIcon from '/delete.png';
+import deleteIcon from '/edit-file.png';
+
 
 const ChatSidebar = ({
   sessions,
@@ -36,17 +39,7 @@ const ChatSidebar = ({
       </div>
 
       <button
-        style={{
-          marginBottom: '15px',
-          width: '100%',
-          padding: '10px',
-          background: '#05c8f4',
-          color: '#000',
-          fontWeight: 'bold',
-          border: 'none',
-          borderRadius: '8px',
-          cursor: 'pointer',
-        }}
+        className="chat-input-glow-button"
         onClick={startNewChat} // ✅ Fix New Chat
       >
         + New Chat
@@ -96,17 +89,43 @@ const ChatSidebar = ({
                       setRenameValue(title);
                       setRenamingIndex(index);
                     }}
-                    style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0, marginTop: '7.5px' }}
+                    style={{
+                      background: 'none',
+                      border: 'none',
+                      cursor: 'pointer',
+                      padding: 0,
+                      marginTop: '7.5px'
+                    }}
                     title="Rename"
                   >
-                    ✏️
+                    <img
+                      src={deleteIcon}
+                      alt="Rename"
+                      width={16}
+                      height={16}
+                      style={{ display: 'block' }}
+                    />
                   </button>
+
                   <button
                     onClick={() => handleDelete(index)}
-                    style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0, marginTop: '7.5px' }}
+                    style={{
+                      background: 'none',
+                      border: 'none',
+                      cursor: 'pointer',
+                      padding: 0,
+                      marginTop: '7.5px',
+                      marginLeft: '6px' // optional spacing between icons
+                    }}
                     title="Delete"
                   >
-                    🗑️
+                    <img
+                      src={pencilIcon}
+                      alt="Delete"
+                      width={16}
+                      height={16}
+                      style={{ display: 'block' }}
+                    />
                   </button>
                 </div>
               </div>

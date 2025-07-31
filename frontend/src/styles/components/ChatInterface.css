@@ -186,7 +186,7 @@
 
 
 .chat-bubble.user {
-    background: rgba(5, 200, 244, 0.3);
+    background: rgba(255, 255, 255, 0.1);
     align-self: flex-end;
 }
 
@@ -222,7 +222,7 @@
 
 /* WhatsApp-style chat bubbles */
 .chat-bubble.user {
-    background: rgba(5, 200, 244, 0.2); /* glass effect */
+    background: rgba(255, 255, 255, 0.1); /* glass effect */
     backdrop-filter: blur(10px);
     color: white;
     border-radius: 16px 16px 4px 16px;

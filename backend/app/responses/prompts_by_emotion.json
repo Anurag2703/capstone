@@ -45,5 +45,20 @@
         "I feel proud of myself for getting help.",
         "I’m learning to trust myself again.",
         "I’m starting to believe things can get better."
+    ],
+    "anger": [
+        "I’m so angry I can’t even think straight.",
+        "Everything makes me want to scream.",
+        "I feel like I’m about to explode.",
+        "People keep pushing my buttons.",
+        "I can’t control this rage inside me."
+    ],
+    
+    "burnout": [
+        "I'm so exhausted and can't keep up with anything anymore.",
+        "I'm feeling mentally drained. Everything is just too much.",
+        "Lately I’ve lost interest in everything and can't concentrate.",
+        "I’m burned out and tired of pretending I'm okay.",
+        "I have no motivation left. I'm always tired and behind."
     ]
 }
